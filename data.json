@@ -1,0 +1,25 @@
+{
+  "multimeter": {
+    "title": "مولتی‌متر دیجیتال",
+    "manufacturer": "ExampleCo",
+    "specs": {
+      "DC Voltage": "0-600V",
+      "AC Voltage": "0-600V",
+      "Resistance": "0-20MΩ"
+    },
+    "links": [
+      "https://example.com/multimeter"
+    ]
+  },
+  "soldering_iron": {
+    "title": "هویه برقی",
+    "manufacturer": "SolderX",
+    "specs": {
+      "Power": "60W",
+      "TempRange": "200-450°C"
+    },
+    "links": [
+      "https://example.com/soldering-iron"
+    ]
+  }
+}
