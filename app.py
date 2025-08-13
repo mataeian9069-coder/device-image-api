@@ -1,9 +1,14 @@
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from PIL import Image, ExifTags
 import io, hashlib, json, os
 
 app = FastAPI(title="Device Image Analyzer API", version="0.1.0")
+
+# Mount static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Allow your Webflow domain later (e.g., https://yourdomain.com). For quick tests, "*" is fine.
 origins_env = os.getenv("ALLOWED_ORIGINS", "*")
@@ -24,6 +29,14 @@ def load_local_data():
             return json.load(f)
     except Exception:
         return {}
+
+@app.get("/")
+def root():
+    return {"message": "Welcome to Device Image Analyzer API. Check /docs for API documentation."}
+
+@app.get("/favicon.ico")
+async def favicon():
+    return FileResponse("static/favicon.ico")
 
 @app.get("/health")
 def health():
@@ -71,7 +84,7 @@ async def analyze(file: UploadFile = File(...), label: str | None = Form(None)):
 
     # Response
     return {
-        "recognized_label": matched_label,  # TODO: replace with real model later
+        "recognized_label": matched_label,
         "local_info": local_info,
         "meta": info,
         "message": "Stub recognition; plug your model or external API in analyze() to set recognized_label based on image content."
